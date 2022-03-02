@@ -1,6 +1,6 @@
 package net.revature.nwarner.project1.repository.util;
 
-import net.revature.nwarner.project1.model.Product;
+import net.revature.nwarner.project1.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -27,6 +27,10 @@ public class HibernateUtil {
 
 */
             configuration.addAnnotatedClass(Product.class);
+            configuration.addAnnotatedClass(Shipment.class);
+            configuration.addAnnotatedClass(Customer.class);
+            configuration.addAnnotatedClass(Order.class);
+            configuration.addAnnotatedClass(ProductOrder.class);
 
 
             // ServiceRegistry

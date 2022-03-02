@@ -1,13 +1,15 @@
 package net.revature.nwarner.project1.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class Order {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Integer id;
     @ManyToOne
@@ -17,8 +19,9 @@ public class Order {
     @JoinColumn(name="shipment_id")
     private Shipment shipment;
     @Column(name="order_date", nullable = false)
-    private Date orderDate;
-    @OneToMany
+    private LocalDate orderDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="order_id")
     private List<ProductOrder> products;
 
     public Integer getId() {
@@ -45,11 +48,11 @@ public class Order {
         this.shipment = shipment;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
     public List<ProductOrder> getProducts() {
@@ -58,5 +61,12 @@ public class Order {
 
     public void setProducts(List<ProductOrder> products) {
         this.products = products;
+    }
+
+    public void addProductOrder(ProductOrder po) {
+        if (products == null) {
+            products = new ArrayList<>();
+        }
+        products.add(po);
     }
 }

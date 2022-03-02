@@ -5,12 +5,14 @@ import net.revature.nwarner.project1.repository.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Component
 public class ProductRepository {
 
     public Product getProduct(int productId) {
@@ -62,7 +64,7 @@ public class ProductRepository {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Product> cq = cb.createQuery(Product.class);
             Root<Product> root = cq.from(Product.class);
-            cq.select(root).where(cb.like(root.get("name"), productName));
+            cq.select(root).where(cb.like(root.get("name"), String.format("%%%s%%", productName)));
 
             Query<Product> query = session.createQuery(cq);
             List<Product> products = query.getResultList();

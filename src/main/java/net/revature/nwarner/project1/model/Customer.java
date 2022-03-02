@@ -5,7 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="customer")
 public class Customer {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="customer_id")
     private Integer id;
     @Column(name="username", nullable = false, unique = true)

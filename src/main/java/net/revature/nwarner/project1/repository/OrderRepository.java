@@ -5,12 +5,14 @@ import net.revature.nwarner.project1.repository.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+@Repository
 public class OrderRepository {
 
     public Order getOrder(int orderId) {

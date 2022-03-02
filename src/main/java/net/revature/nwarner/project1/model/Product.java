@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="product")
 public class Product {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="product_id")
     private Integer id;
     @Column(name="upc", nullable = false, unique = true)
@@ -28,6 +29,21 @@ public class Product {
     @Column(name="current_stock", nullable = false)
     @ColumnDefault("0")
     private Integer currentStock;
+
+    public Product() {
+
+    }
+
+    public Product(String upc, String name, Integer aisle, Integer row, Integer section, Integer shelf, String department, Integer currentStock) {
+        this.upc = upc;
+        this.name = name;
+        this.aisle = aisle;
+        this.row = row;
+        this.section = section;
+        this.shelf = shelf;
+        this.department = department;
+        this.currentStock = currentStock;
+    }
 
     public Integer getId() {
         return id;

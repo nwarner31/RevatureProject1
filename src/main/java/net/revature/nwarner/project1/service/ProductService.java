@@ -2,13 +2,18 @@ package net.revature.nwarner.project1.service;
 
 import net.revature.nwarner.project1.model.Product;
 import net.revature.nwarner.project1.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ProductService {
-    ProductRepository pr;
-    public ProductService() {
-        pr = new ProductRepository();
+    private ProductRepository pr;
+
+    @Autowired
+    public ProductService(ProductRepository pr) {
+        this.pr = pr;
     }
 
     public Product getProductById(int productId) {
@@ -28,7 +33,7 @@ public class ProductService {
     }
 
     public boolean addProduct(Product p) {
-        if (getProductById(p.getId()) == null) {
+        if (getProductByUpc(p.getUpc()) == null) {
             return pr.addProduct(p);
         } else {
             return false;

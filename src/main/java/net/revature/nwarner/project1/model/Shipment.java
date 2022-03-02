@@ -1,17 +1,18 @@
 package net.revature.nwarner.project1.model;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="shipment")
 public class Shipment {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="shipment_id")
     private Integer id;
     @Column(name="ship_date", nullable = false)
-    private Date shipDate;
+    private LocalDate shipDate;
     @Column(name="ship_time", nullable = false)
     private Time shipTime;
     @Column(name="bay_number", nullable = false)
@@ -25,11 +26,11 @@ public class Shipment {
         this.id = id;
     }
 
-    public Date getShipDate() {
+    public LocalDate getShipDate() {
         return shipDate;
     }
 
-    public void setShipDate(Date shipDate) {
+    public void setShipDate(LocalDate shipDate) {
         this.shipDate = shipDate;
     }
 

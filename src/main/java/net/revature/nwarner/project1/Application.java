@@ -1,0 +1,16 @@
+package net.revature.nwarner.project1;
+
+import net.revature.nwarner.project1.model.Shipment;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class);
+    }
+
+
+}

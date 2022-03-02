@@ -5,14 +5,17 @@ import net.revature.nwarner.project1.repository.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class ShipmentRepository {
 
     public Shipment getShipment(int shipmentId) {
@@ -35,7 +38,7 @@ public class ShipmentRepository {
         return null;
     }
 
-    public List<Shipment> getShipment(Date shipDate) {
+    public List<Shipment> getShipment(LocalDate shipDate) {
         Session session = null;
         try {
             session = HibernateUtil.getSession();
@@ -53,6 +56,22 @@ public class ShipmentRepository {
             if(session != null) session.close();
         }
         return null;
+    }
+
+    public boolean addShipment(Shipment s) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSession();
+            Transaction transaction = session.beginTransaction();
+            session.persist(s);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(session != null) session.close();
+        }
+        return false;
     }
 
     public boolean updateShipment(Shipment s) {

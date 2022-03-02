@@ -5,12 +5,14 @@ import net.revature.nwarner.project1.repository.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+@Component
 public class CustomerRepository {
 
     public Customer getCustomer(int customerId) {
@@ -44,8 +46,9 @@ public class CustomerRepository {
 
             Query<Customer> query = session.createQuery(cq);
             Customer c = query.getSingleResult();
+            return c;
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if(session != null) session.close();
         }
