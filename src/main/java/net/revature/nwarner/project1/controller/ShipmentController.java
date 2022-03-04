@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("shipment")
 public class ShipmentController {
 
     private ShipmentService ss;
@@ -19,29 +20,34 @@ public class ShipmentController {
         this.ss = ss;
     }
 
-    @GetMapping(value = "shipment/id/{id}")
+    @GetMapping(value = "id/{id}")
     public Shipment getShipmentById(@PathVariable int id) {
         return ss.getShipment(id);
     }
 
-    @GetMapping(value = "shipment/date/{date}")
+    @GetMapping(value = "date/{date}")
     public List<Shipment> getShipmentsByDate(@PathVariable String date) {
         LocalDate shipDate = LocalDate.parse(date);
         return ss.getShipment(shipDate);
     }
 
-    @PostMapping(value = "shipment")
-    public boolean addShipment(@RequestBody Shipment s) {
+    @GetMapping(value = "count/date")
+    public List<Object[]> getShipmentCountByDate() {
+        return ss.getShipmentCountByDate();
+    }
+
+    @PostMapping
+    public Shipment addShipment(@RequestBody Shipment s) {
         return ss.addShipment(s);
     }
 
-    @PutMapping(value = "shipment/{id}")
+    @PutMapping(value = "{id}")
     public boolean updateShipment(@RequestBody Shipment s) {
         return ss.updateShipment(s);
     }
 
-    @DeleteMapping(value = "shipment/{id}")
-    public boolean deleteShipment(@RequestBody Shipment s) {
-        return ss.removeShipment(s);
+    @DeleteMapping(value = "{id}")
+    public void deleteShipment(@RequestBody Shipment s) {
+        ss.removeShipment(s);
     }
 }

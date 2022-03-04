@@ -1,108 +1,24 @@
 package net.revature.nwarner.project1.repository;
 
 import net.revature.nwarner.project1.model.Shipment;
-import net.revature.nwarner.project1.repository.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-@Component
-public class ShipmentRepository {
+public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
 
-    public Shipment getShipment(int shipmentId) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Shipment> cq = cb.createQuery(Shipment.class);
-            Root<Shipment> root = cq.from(Shipment.class);
-            cq.select(root).where(cb.equal(root.get("id"), shipmentId));
+    //@Query("from Shipment where shipment_id = :id")
+    Shipment findById(int id);
 
-            Query<Shipment> query = session.createQuery(cq);
-            Shipment s = query.getSingleResult();
-            return s;
-        } catch (Exception e) {
+    //@Query("from Shipment where ship_date = :shipDate")
+    List<Shipment> findAllByShipDate(LocalDate shipDate);
 
-        } finally {
-            if(session != null) session.close();
-        }
-        return null;
-    }
+    @Query("SELECT shipDate, COUNT(shipment_id) FROM Shipment GROUP BY shipDate")
+    List<Object[]> getShipmentCountByDate();
 
-    public List<Shipment> getShipment(LocalDate shipDate) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Shipment> cq = cb.createQuery(Shipment.class);
-            Root<Shipment> root = cq.from(Shipment.class);
-            cq.select(root).where(cb.equal(root.get("shipDate"), shipDate));
+    Shipment save(Shipment s);
 
-            Query<Shipment> query = session.createQuery(cq);
-            List<Shipment> shipments = query.getResultList();
-            return shipments;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return null;
-    }
-
-    public boolean addShipment(Shipment s) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.persist(s);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return false;
-    }
-
-    public boolean updateShipment(Shipment s) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.merge(s);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return false;
-    }
-
-    public boolean removeShipment(Shipment s) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.remove(s);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return false;
-    }
+    void delete(Shipment s);
 }

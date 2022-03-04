@@ -15,23 +15,23 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(int customerId) {
-        return cr.getCustomer(customerId);
+        return cr.findById(customerId);
     }
 
     public Customer getCustomer(String username, String password) {
-        return cr.getCustomer(username, password);
+        return cr.getCustomerLogin(username, password);
     }
 
-    public boolean addCustomer(Customer c) {
-            return cr.addCustomer(c);
-
+    public Customer addCustomer(Customer c) {
+            return cr.save(c);
     }
 
     public boolean updateCustomer(Customer c) {
-        return cr.updateCustomer(c);
+        //return cr.updateCustomer(c);
+        return false;
     }
 
-    public boolean removeCustomer(Customer c) {
-        return cr.removeCustomer(c);
+    public void removeCustomer(Customer c) {
+        cr.delete(c);
     }
 }

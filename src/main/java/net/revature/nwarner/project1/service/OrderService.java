@@ -15,20 +15,22 @@ public class OrderService {
     }
 
     public Order getOrder(int orderId) {
-        return or.getOrder(orderId);
+        return or.findById(orderId);
     }
 
-    public boolean addOrder(Order o) {
+    public Order addOrder(Order o) {
 
-        return or.addOrder(o);
+        return or.save(o);
 
     }
 
     public boolean updateOrder(Order o) {
-        return or.updateOrder(o);
+        //return or.updateOrder(o);
+        return false;
     }
 
-    public boolean removeOrder(Order o) {
-        return or.removeOrder(o);
+    public void removeOrder(Order o) {
+        or.delete(o);
+
     }
 }

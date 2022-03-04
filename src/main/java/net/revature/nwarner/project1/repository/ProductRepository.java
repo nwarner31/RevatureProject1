@@ -1,153 +1,37 @@
 package net.revature.nwarner.project1.repository;
 
 import net.revature.nwarner.project1.model.Product;
-import net.revature.nwarner.project1.repository.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
-@Component
-public class ProductRepository {
 
-    public Product getProduct(int productId) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-            Root<Product> root = cq.from(Product.class);
-            cq.select(root).where(cb.equal(root.get("id"), productId));
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-            Query<Product> query = session.createQuery(cq);
-            Product p = query.getSingleResult();
-            return p;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
+    List<Product> findAll();
 
-        }
-        return null;
-    }
+    //@Query("from Product where product_id = :id")
+    Product findById(int id);
 
-    public Product getProduct(String upc) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-            Root<Product> root = cq.from(Product.class);
-            cq.select(root).where(cb.equal(root.get("upc"), upc));
+    //@Query("from Product where upc = :upc")
+    Product findByUpc(String upc);
 
-            Query<Product> query = session.createQuery(cq);
-            Product p = query.getSingleResult();
-            return p;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
+    @Query("from Product where product_name like %:name%")
+    List<Product> getProductsByName(@Param("name") String name);
 
-        }
-        return null;
-    }
+    //@Query("from Product where department = :department")
+    List<Product> findAllByDepartment(String department);
 
-    public List<Product> getProductsByName(String productName) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-            Root<Product> root = cq.from(Product.class);
-            cq.select(root).where(cb.like(root.get("name"), String.format("%%%s%%", productName)));
+    @Query("SELECT department, COUNT(product_id) FROM Product GROUP BY department")
+    List<Object[]> getProductCountByDepartment();
 
-            Query<Product> query = session.createQuery(cq);
-            List<Product> products = query.getResultList();
-            return products;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
+    Product save(Product p);
 
-        }
-        return null;
-    }
+    void delete(Product entity);
 
-    public List<Product> getProductsByDept(String productDept) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-            Root<Product> root = cq.from(Product.class);
-            cq.select(root).where(cb.equal(root.get("department"), productDept));
 
-            Query<Product> query = session.createQuery(cq);
-            List<Product> products = query.getResultList();
-            return products;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-
-        }
-        return null;
-    }
-
-    public boolean addProduct(Product p) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.persist(p);
-            transaction.commit();
-            return true;
-
-        } catch(Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if(session != null) session.close();
-
-        }
-        return false;
-    }
-
-    public boolean updateProduct(Product p) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.merge(p);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return false;
-    }
-
-    public boolean removeProduct(Product p) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.remove(p);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(session != null) session.close();
-        }
-        return false;
-    }
-
+    //Product update();
 }

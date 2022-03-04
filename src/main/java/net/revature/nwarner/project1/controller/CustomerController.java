@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("customer")
 public class CustomerController {
 
     private CustomerService cs;
@@ -17,31 +18,31 @@ public class CustomerController {
         this.cs = cs;
     }
 
-    @GetMapping(value = "customer/{id}")
+    @GetMapping(value = "{id}")
     public Customer getCustomerById(@PathVariable int id) {
         return cs.getCustomerById(id);
     }
 
-    @PostMapping(value = "customer/login")
+    @PostMapping(value = "login")
     public Customer login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
         return cs.getCustomer(username, password);
     }
 
-    @PostMapping(value = "customer")
-    public boolean addCustomer(@RequestBody Customer c) {
+    @PostMapping
+    public Customer addCustomer(@RequestBody Customer c) {
         return cs.addCustomer(c);
     }
 
-    @PutMapping(value = "customer")
+    @PutMapping
     public boolean updateCustomer(@RequestBody Customer c) {
         return cs.updateCustomer(c);
     }
 
-    @DeleteMapping(value = "customer/{id}")
-    public boolean deleteCustomer(@RequestBody Customer c) {
-        return cs.removeCustomer(c);
+    @DeleteMapping(value = "{id}")
+    public void deleteCustomer(@RequestBody Customer c) {
+        cs.removeCustomer(c);
     }
 
 }

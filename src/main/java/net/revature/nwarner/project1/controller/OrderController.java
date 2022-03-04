@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("order")
 public class OrderController {
 
     private OrderService os;
@@ -15,23 +16,23 @@ public class OrderController {
         this.os = os;
     }
 
-    @GetMapping(value = "order/{id}")
+    @GetMapping(value = "{id}")
     public Order getOrderById(@PathVariable int id) {
         return os.getOrder(id);
     }
 
-    @PostMapping(value = "order")
-    public boolean addOrder(@RequestBody Order o) {
+    @PostMapping
+    public Order addOrder(@RequestBody Order o) {
         return os.addOrder(o);
     }
 
-    @PutMapping(value = "order/{id}")
+    @PutMapping(value = "{id}")
     public boolean updateOrder(@RequestBody Order o) {
         return os.updateOrder(o);
     }
 
-    @DeleteMapping(value = "order/{id}")
-    public boolean deleteOrder(@RequestBody Order o) {
-        return os.removeOrder(o);
+    @DeleteMapping(value = "{id}")
+    public void deleteOrder(@RequestBody Order o) {
+        os.removeOrder(o);
     }
 }

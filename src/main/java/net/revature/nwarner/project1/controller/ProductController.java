@@ -5,10 +5,10 @@ import net.revature.nwarner.project1.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@RequestMapping("product")
 public class ProductController {
 
     private ProductService ps;
@@ -18,35 +18,50 @@ public class ProductController {
         this.ps = ps;
     }
 
-    @GetMapping(value = "product/upc/{upc}")
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return ps.findAllProducts();
+    }
+
+    @GetMapping(value = "id/{id}")
+    public Product getProductByUpc(@PathVariable int id) {
+        System.out.println("In get by upc");
+        return ps.getProductById(id);
+    }
+
+    @GetMapping(value = "upc/{upc}")
     public Product getProductByUpc(@PathVariable String upc) {
         System.out.println("In get by upc");
         //return ps.getProductByUpc(upc);
         return null;
     }
 
-    @GetMapping(value = "product/name/{name}")
+    @GetMapping(value = "name/{name}")
     public List<Product> getProductsByName(@PathVariable String name) {
         return ps.getProductsByName(name);
     }
 
-    @GetMapping(value = "product/dept/{dept}")
+    @GetMapping(value = "dept/{dept}")
     public List<Product> getProductsByDept(@PathVariable String dept) {
         return ps.getProductsByDept(dept);
     }
 
-    @PostMapping(value = "product")
-    public boolean addProduct(@RequestBody Product p) {
-        System.out.println(p);
+    @GetMapping(value = "count/dept/")
+    public String getProductCountByDept() {
+        return ps.getProductCountByDepartment();
+    }
+
+    @PostMapping
+    public Product addProduct(@RequestBody Product p) {
         return ps.addProduct(p);
     }
 
-    @PutMapping(value = "product/{id}")
+    @PutMapping(value = "{id}")
     public boolean updateProduct(@RequestBody Product p) {
         return ps.updateProduct(p);
     }
 
-    @DeleteMapping(value="product/{id}")
+    @DeleteMapping(value="{id}")
     public boolean deleteProduct(@RequestBody Product p) {
         return ps.removeProduct(p);
     }

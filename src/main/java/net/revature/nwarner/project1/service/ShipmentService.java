@@ -5,7 +5,6 @@ import net.revature.nwarner.project1.repository.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,24 +19,27 @@ public class ShipmentService {
     }
 
     public Shipment getShipment(int shipmentId) {
-        return sr.getShipment(shipmentId);
+        return sr.findById(shipmentId);
     }
 
     public List<Shipment> getShipment(LocalDate shipDate) {
-        return sr.getShipment(shipDate);
+        return sr.findAllByShipDate(shipDate);
     }
 
-    public boolean addShipment(Shipment s) {
+    public List<Object[]> getShipmentCountByDate() {
+        return sr.getShipmentCountByDate();
+    }
 
-            return sr.addShipment(s);
-
+    public Shipment addShipment(Shipment s) {
+        return sr.save(s);
     }
 
     public boolean updateShipment(Shipment s) {
-        return sr.updateShipment(s);
+        //return sr.updateShipment(s);
+        return false;
     }
 
-    public boolean removeShipment(Shipment s) {
-        return sr.removeShipment(s);
+    public void removeShipment(Shipment s) {
+        sr.delete(s);
     }
 }
