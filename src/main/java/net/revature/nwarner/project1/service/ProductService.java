@@ -8,11 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
 public class ProductService {
+
     private ProductRepository pr;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     public ProductService(ProductRepository pr) {
@@ -39,15 +46,16 @@ public class ProductService {
         return  pr.findAllByDepartment(productDept);
     }
 
-    public String getProductCountByDepartment() {
+    public List<Object[]> getProductCountByDepartment() {
         List<Object[]> data = pr.getProductCountByDepartment();
-        String json = "[";
-        for(int index = 0; index < data.toArray().length; index++) {
-            json += String.format("{\"%s\": %s}", data.get(index)[0], data.get(index)[1]);
-            if(index != data.toArray().length - 1) json+=", ";
-        }
-        json += "]";
-        return json;
+//        String json = "[";
+//        for(int index = 0; index < data.toArray().length; index++) {
+//            json += String.format("{\"%s\": %s}", data.get(index)[0], data.get(index)[1]);
+//            if(index != data.toArray().length - 1) json+=", ";
+//        }
+//        json += "]";
+//        return json;
+        return data;
 
     }
 
@@ -61,10 +69,10 @@ public class ProductService {
 
     }
 
-    public boolean updateProduct(Product p) {
-        //return pr.updateProduct(p);
+    @Transactional
+    public Product updateProduct(Product p) {
 
-        return false;
+        return em.merge(p);
     }
 
     public boolean removeProduct(Product p) {

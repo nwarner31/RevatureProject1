@@ -12,9 +12,9 @@ public class Shipment {
     @Column(name="shipment_id")
     private Integer id;
     @Column(name="ship_date", nullable = false)
-    private LocalDate shipDate;
+    private String shipDate;
     @Column(name="ship_time", nullable = false)
-    private Time shipTime;
+    private String shipTime;
     @Column(name="bay_number", nullable = false)
     private Integer bayNum;
 
@@ -26,19 +26,19 @@ public class Shipment {
         this.id = id;
     }
 
-    public LocalDate getShipDate() {
+    public String getShipDate() {
         return shipDate;
     }
 
-    public void setShipDate(LocalDate shipDate) {
+    public void setShipDate(String shipDate) {
         this.shipDate = shipDate;
     }
 
-    public Time getShipTime() {
+    public String getShipTime() {
         return shipTime;
     }
 
-    public void setShipTime(Time shipTime) {
+    public void setShipTime(String shipTime) {
         this.shipTime = shipTime;
     }
 

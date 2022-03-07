@@ -20,14 +20,22 @@ public class ShipmentController {
         this.ss = ss;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping
+    public List<Shipment> getAllShipments() {
+        return ss.getAllShipments();
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "id/{id}")
     public Shipment getShipmentById(@PathVariable int id) {
         return ss.getShipment(id);
     }
 
-    @GetMapping(value = "date/{date}")
-    public List<Shipment> getShipmentsByDate(@PathVariable String date) {
-        LocalDate shipDate = LocalDate.parse(date);
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(value = "date/{shipDate}")
+    public List<Shipment> getShipmentsByDate(@PathVariable String shipDate) {
+
         return ss.getShipment(shipDate);
     }
 

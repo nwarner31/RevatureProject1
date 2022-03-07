@@ -19,7 +19,7 @@ public class Order {
     @JoinColumn(name="shipment_id")
     private Shipment shipment;
     @Column(name="order_date", nullable = false)
-    private LocalDate orderDate;
+    private String orderDate;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private List<ProductOrder> products;
@@ -48,11 +48,11 @@ public class Order {
         this.shipment = shipment;
     }
 
-    public LocalDate getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
     public List<ProductOrder> getProducts() {

@@ -5,6 +5,7 @@ import net.revature.nwarner.project1.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,7 +19,14 @@ public class CustomerController {
         this.cs = cs;
     }
 
-    @GetMapping(value = "{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping
+    public List<Customer> getAllCustomers() {
+        return cs.getAllCustomers();
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(value = "id/{id}")
     public Customer getCustomerById(@PathVariable int id) {
         return cs.getCustomerById(id);
     }

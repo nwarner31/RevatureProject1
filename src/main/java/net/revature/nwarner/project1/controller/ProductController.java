@@ -18,36 +18,41 @@ public class ProductController {
         this.ps = ps;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<Product> getAllProducts() {
         return ps.findAllProducts();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "id/{id}")
-    public Product getProductByUpc(@PathVariable int id) {
-        System.out.println("In get by upc");
+    public Product getProductById(@PathVariable int id) {
+
         return ps.getProductById(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "upc/{upc}")
     public Product getProductByUpc(@PathVariable String upc) {
         System.out.println("In get by upc");
-        //return ps.getProductByUpc(upc);
-        return null;
+        return ps.getProductByUpc(upc);
+
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "name/{name}")
     public List<Product> getProductsByName(@PathVariable String name) {
         return ps.getProductsByName(name);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "dept/{dept}")
     public List<Product> getProductsByDept(@PathVariable String dept) {
         return ps.getProductsByDept(dept);
     }
 
-    @GetMapping(value = "count/dept/")
-    public String getProductCountByDept() {
+    @GetMapping(value = "count/dept")
+    public List<Object[]> getProductCountByDept() {
         return ps.getProductCountByDepartment();
     }
 
@@ -57,7 +62,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "{id}")
-    public boolean updateProduct(@RequestBody Product p) {
+    public Product updateProduct(@RequestBody Product p) {
         return ps.updateProduct(p);
     }
 

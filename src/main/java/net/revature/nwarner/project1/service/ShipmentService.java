@@ -18,11 +18,15 @@ public class ShipmentService {
         this.sr = sr;
     }
 
+    public List<Shipment> getAllShipments(){
+        return sr.findAll();
+    }
+
     public Shipment getShipment(int shipmentId) {
         return sr.findById(shipmentId);
     }
 
-    public List<Shipment> getShipment(LocalDate shipDate) {
+    public List<Shipment> getShipment(String shipDate) {
         return sr.findAllByShipDate(shipDate);
     }
 

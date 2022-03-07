@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
 
+    List<Shipment> findAll();
+
     //@Query("from Shipment where shipment_id = :id")
     Shipment findById(int id);
 
     //@Query("from Shipment where ship_date = :shipDate")
-    List<Shipment> findAllByShipDate(LocalDate shipDate);
+    List<Shipment> findAllByShipDate(String shipDate);
 
-    @Query("SELECT shipDate, COUNT(shipment_id) FROM Shipment GROUP BY shipDate")
+    @Query("SELECT shipDate, COUNT(id) FROM Shipment GROUP BY shipDate")
     List<Object[]> getShipmentCountByDate();
 
     Shipment save(Shipment s);

@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-
+@Transactional
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+
 
     List<Product> findAll();
 
@@ -19,13 +22,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //@Query("from Product where upc = :upc")
     Product findByUpc(String upc);
 
-    @Query("from Product where product_name like %:name%")
+    @Query("from Product where name like %:name%")
     List<Product> getProductsByName(@Param("name") String name);
 
     //@Query("from Product where department = :department")
     List<Product> findAllByDepartment(String department);
 
-    @Query("SELECT department, COUNT(product_id) FROM Product GROUP BY department")
+    @Query("SELECT department, COUNT(id) FROM Product GROUP BY department")
     List<Object[]> getProductCountByDepartment();
 
     Product save(Product p);

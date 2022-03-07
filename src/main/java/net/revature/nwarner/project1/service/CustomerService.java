@@ -5,6 +5,8 @@ import net.revature.nwarner.project1.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CustomerService {
     private CustomerRepository cr;
@@ -12,6 +14,10 @@ public class CustomerService {
     @Autowired
     public CustomerService(CustomerRepository cr) {
         this.cr = cr;
+    }
+
+    public List<Customer> getAllCustomers() {
+        return cr.findAll();
     }
 
     public Customer getCustomerById(int customerId) {
