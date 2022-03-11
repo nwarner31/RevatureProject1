@@ -28,44 +28,47 @@ public class ProductController {
     @GetMapping(value = "id/{id}")
     public Product getProductById(@PathVariable int id) {
 
-        return ps.getProductById(id);
+        return ps.findProductById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "upc/{upc}")
     public Product getProductByUpc(@PathVariable String upc) {
         System.out.println("In get by upc");
-        return ps.getProductByUpc(upc);
+        return ps.findProductByUpc(upc);
 
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "name/{name}")
     public List<Product> getProductsByName(@PathVariable String name) {
-        return ps.getProductsByName(name);
+        return ps.findProductsByName(name);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "dept/{dept}")
     public List<Product> getProductsByDept(@PathVariable String dept) {
-        return ps.getProductsByDept(dept);
+        return ps.findProductsByDept(dept);
     }
 
     @GetMapping(value = "count/dept")
     public List<Object[]> getProductCountByDept() {
-        return ps.getProductCountByDepartment();
+        return ps.findProductCountByDepartment();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public Product addProduct(@RequestBody Product p) {
-        return ps.addProduct(p);
+        return ps.saveProduct(p);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(value = "{id}")
     public Product updateProduct(@RequestBody Product p) {
-        return ps.updateProduct(p);
+        return ps.putProduct(p);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(value="{id}")
     public boolean deleteProduct(@RequestBody Product p) {
         return ps.removeProduct(p);

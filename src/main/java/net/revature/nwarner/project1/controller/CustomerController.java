@@ -22,32 +22,35 @@ public class CustomerController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<Customer> getAllCustomers() {
-        return cs.getAllCustomers();
+        return cs.findAllCustomers();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "id/{id}")
     public Customer getCustomerById(@PathVariable int id) {
-        return cs.getCustomerById(id);
+        return cs.findCustomerById(id);
     }
 
     @PostMapping(value = "login")
     public Customer login(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
-        return cs.getCustomer(username, password);
+        return cs.findCustomer(username, password);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public Customer addCustomer(@RequestBody Customer c) {
-        return cs.addCustomer(c);
+        return cs.postCustomer(c);
     }
 
-    @PutMapping
-    public boolean updateCustomer(@RequestBody Customer c) {
-        return cs.updateCustomer(c);
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping(value = "{id}")
+    public Customer updateCustomer(@RequestBody Customer c) {
+        return cs.putCustomer(c);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(value = "{id}")
     public void deleteCustomer(@RequestBody Customer c) {
         cs.removeCustomer(c);

@@ -30,23 +30,23 @@ public class ProductService {
         return pr.findAll();
     }
 
-    public Product getProductById(int productId) {
+    public Product findProductById(int productId) {
         return pr.findById(productId);
     }
 
-    public Product getProductByUpc(String upc) {
+    public Product findProductByUpc(String upc) {
         return pr.findByUpc(upc);
     }
 
-    public List<Product> getProductsByName(String productName) {
+    public List<Product> findProductsByName(String productName) {
         return pr.getProductsByName(productName);
     }
 
-    public List<Product> getProductsByDept(String productDept) {
+    public List<Product> findProductsByDept(String productDept) {
         return  pr.findAllByDepartment(productDept);
     }
 
-    public List<Object[]> getProductCountByDepartment() {
+    public List<Object[]> findProductCountByDepartment() {
         List<Object[]> data = pr.getProductCountByDepartment();
 //        String json = "[";
 //        for(int index = 0; index < data.toArray().length; index++) {
@@ -60,8 +60,8 @@ public class ProductService {
     }
 
 
-        public Product addProduct(Product p) {
-        if (getProductByUpc(p.getUpc()) == null) {
+        public Product saveProduct(Product p) {
+        if (findProductByUpc(p.getUpc()) == null) {
             return pr.save(p);
         } else {
             return null;
@@ -70,7 +70,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Product updateProduct(Product p) {
+    public Product putProduct(Product p) {
 
         return em.merge(p);
     }

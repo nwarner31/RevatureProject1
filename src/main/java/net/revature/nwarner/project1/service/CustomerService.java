@@ -5,36 +5,42 @@ import net.revature.nwarner.project1.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
 public class CustomerService {
     private CustomerRepository cr;
 
+    @PersistenceContext
+    EntityManager em;
+
     @Autowired
     public CustomerService(CustomerRepository cr) {
         this.cr = cr;
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> findAllCustomers() {
         return cr.findAll();
     }
 
-    public Customer getCustomerById(int customerId) {
+    public Customer findCustomerById(int customerId) {
         return cr.findById(customerId);
     }
 
-    public Customer getCustomer(String username, String password) {
+    public Customer findCustomer(String username, String password) {
         return cr.getCustomerLogin(username, password);
     }
 
-    public Customer addCustomer(Customer c) {
+    public Customer postCustomer(Customer c) {
             return cr.save(c);
     }
 
-    public boolean updateCustomer(Customer c) {
-        //return cr.updateCustomer(c);
-        return false;
+    @Transactional
+    public Customer putCustomer(Customer c) {
+        return em.merge(c);
     }
 
     public void removeCustomer(Customer c) {

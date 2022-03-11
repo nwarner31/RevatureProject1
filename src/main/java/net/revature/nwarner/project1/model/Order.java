@@ -20,7 +20,7 @@ public class Order {
     private Shipment shipment;
     @Column(name="order_date", nullable = false)
     private String orderDate;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="order_id")
     private List<ProductOrder> products;
 

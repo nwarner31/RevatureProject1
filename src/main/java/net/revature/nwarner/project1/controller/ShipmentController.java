@@ -23,37 +23,40 @@ public class ShipmentController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<Shipment> getAllShipments() {
-        return ss.getAllShipments();
+        return ss.findAllShipments();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "id/{id}")
     public Shipment getShipmentById(@PathVariable int id) {
-        return ss.getShipment(id);
+        return ss.findShipment(id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "date/{shipDate}")
     public List<Shipment> getShipmentsByDate(@PathVariable String shipDate) {
 
-        return ss.getShipment(shipDate);
+        return ss.findShipment(shipDate);
     }
 
     @GetMapping(value = "count/date")
-    public List<Object[]> getShipmentCountByDate() {
-        return ss.getShipmentCountByDate();
+    public List<Object[]> findShipmentCountByDate() {
+        return ss.findShipmentCountByDate();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public Shipment addShipment(@RequestBody Shipment s) {
-        return ss.addShipment(s);
+        return ss.postShipment(s);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(value = "{id}")
-    public boolean updateShipment(@RequestBody Shipment s) {
-        return ss.updateShipment(s);
+    public Shipment updateShipment(@RequestBody Shipment s) {
+        return ss.putShipment(s);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(value = "{id}")
     public void deleteShipment(@RequestBody Shipment s) {
         ss.removeShipment(s);
