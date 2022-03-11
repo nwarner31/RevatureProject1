@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ShipmentAspect {
 
-    Logger logger = Logger.getLogger(ProductAspect.class);
+    Logger logger = Logger.getLogger(ShipmentAspect.class);
 
     @Before("execution(* get*Shipment*(..))")
     public void beforeGetShipment(JoinPoint jp) {

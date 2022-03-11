@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class CustomerAspect {
 
 
-    Logger logger = Logger.getLogger(ProductAspect.class);
+    Logger logger = Logger.getLogger(CustomerAspect.class);
 
     @Before("execution(* get*Customer*(..))")
     public void beforeGetCustomer(JoinPoint jp) {
