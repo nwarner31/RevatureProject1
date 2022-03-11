@@ -1,5 +1,5 @@
-*.properties
+
 *.log
 
 *.class
-**/log4j2.xml
+
